@@ -2,13 +2,14 @@
 *In the dimming embrace of twilight, you wander through the shadowed woods, a young apothecary driven by a quiet desperation. The light fades faster than your hopes, casting long, mournful shadows over the earth. The leaves whisper secrets of the night as you search, your hands trembling as they sift through the undergrowth, seeking the elusive plants and fungi that may hold the cure. Time is slipping away, as relentless as the fever burning within your small, distant home. You know the night is closing in, and with it, the chance to save a life.*
 
 **Miles to mend is a simple puzzle game where the goal is to find all mushrooms and flowers correctly over 9 levels without getting 13 incorrect answers.**
-- Click on an empty square to place a flower or mushroom
-- Flowers must not be placed adjacent to trees.
-- Mushrooms must be placed adjacent to trees.
-- Numbers on the right and bottom are mushrooms in that row or column
-- Numbers on the top and left are flowers in that row or column
-- Click a number to score that row and column
-- When all spaces on the grid are scored you progress to the next level if you have fewer than 13 incorrect placements.
+- Collect your ingredients by selecting the ingredient tab (mushroom or flower) and clicking an empty square on the board.
+- The numbers along the borders show how many mushrooms and flowers to include in each row and column. Bottom and right show how many mushrooms. Top and left show how many flowers.
+- Flowers need sun: they must not be placed next to trees.
+- Mushrooms need shade: they must be placed next to trees.
+- To remove an ingredient from the board, click on it.
+- When you've finished collecting, click a border number to score that row or column.
+- When all spaces on the grid are scored, if you have fewer than 13 incorrect placements you progress to the next level.
+- Beat 9 levels to win!
 
 
 [Play the game](https://vivianeasley.github.io/miles-to-mend)
