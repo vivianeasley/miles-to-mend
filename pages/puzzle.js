@@ -37,14 +37,16 @@ export const initPuzzle = (appNode, state) => {
 
   // Function to create the grid layout in HTML
   function renderBoard() {
-    updateScoreMisses(state.score, state.misses)
+    updateScoreMisses(state.score, state.misses, state.gridSize - 3)
   
     const gameBoard = appNode.querySelector('#game-board')
   
     if (!gameBoard) return
     // Set the grid template for a 7x7 grid (including headers)
-    gameBoard.style.gridTemplateColumns = `50px repeat(${board[0].length}, 50px) 50px`
-    gameBoard.style.gridTemplateRows = `50px repeat(${board.length}, 50px) 50px`
+    // gameBoard.style.gridTemplateColumns = `50px repeat(${board[0].length}, 50px) 50px`
+    // gameBoard.style.gridTemplateRows = `50px repeat(${board.length}, 50px) 50px`
+
+    gameBoard.style.width = board.length * 60 + 100 + 'px'
   
     // Clear the current grid
     gameBoard.innerHTML = ''
@@ -66,32 +68,34 @@ export const initPuzzle = (appNode, state) => {
           cornerImg.src = images['flower3']
           cornerImg.classList.add('tile-image')
           cell.appendChild(cornerImg)
+          cell.classList.add('corner', 'top-left')
         } else if (x === board[0].length && y === board.length) {
           const cornerImg = document.createElement('img')
           cornerImg.src = images['mushroom']
           cornerImg.classList.add('tile-image')
           cell.appendChild(cornerImg)
+          cell.classList.add('corner', 'bottom-right')
         } else if (x === board[0].length && y === -1) {
-          cell.classList.add('clear-cell')
+          cell.classList.add('clear-cell', 'corner', 'bottom-left')
         } else if (x === -1 && y === board.length) {
-          cell.classList.add('clear-cell')
+          cell.classList.add('clear-cell', 'corner')
         } else if (y === -1 && x >= 0 && x < board[0].length) {
-          cell.classList.add('header-cell')
+          cell.classList.add('header-cell', 'top')
           cell.dataset.event = 'headerCellClick'
           cell.dataset.payload = `x--${x}`
           cell.textContent = top[x] // Top counts
         } else if (x === -1 && y >= 0 && y < board.length) {
-          cell.classList.add('header-cell')
+          cell.classList.add('header-cell', 'left')
           cell.dataset.event = 'headerCellClick'
           cell.dataset.payload = `y--${y}`
           cell.textContent = left[y] // Left counts
         } else if (x === board[0].length && y >= 0 && y < board.length) {
-          cell.classList.add('header-cell')
+          cell.classList.add('header-cell', 'right')
           cell.dataset.event = 'headerCellClick'
           cell.dataset.payload = `y--${y}`
           cell.textContent = right[y] // Right counts
         } else if (y === board.length && x >= 0 && x < board[0].length) {
-          cell.classList.add('header-cell')
+          cell.classList.add('header-cell', 'bottom')
           cell.dataset.event = 'headerCellClick'
           cell.dataset.payload = `x--${x}`
           cell.textContent = bottom[x] // Bottom counts

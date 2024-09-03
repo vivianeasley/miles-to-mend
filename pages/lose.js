@@ -8,13 +8,13 @@ export const initLose = (appNode, state) => {
     setPage('main')
     state.score = 0
     state.misses = 0
-    updateScoreMisses(state.score, state.misses)
+    updateScoreMisses(0, 0, 0)
 }
   const continueSearch = () => {
     setPage('puzzle')
     state.score = 0
     state.misses = 0
-    updateScoreMisses(state.score, state.misses)
+    updateScoreMisses(0, 0, 0)
   }
 
   return { events: { continueSearch, backToMain } }

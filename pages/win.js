@@ -10,7 +10,7 @@ export const initWin = (appNode, state) => {
     stopParticles()
     state.score = 0
     state.misses = 0
-    updateScoreMisses(state.score, state.misses)
+    updateScoreMisses(0, 0, 0)
   }
   const { playCoinClinkSound } = initScoreSound()
   const finalScore = appNode.querySelector('.final-score')
@@ -49,7 +49,7 @@ export const initWin = (appNode, state) => {
     stopParticles()
     state.score = 0
     state.misses = 0
-    updateScoreMisses(state.score, state.misses)
+    updateScoreMisses(0, 0, 0)
   }
 
   return { events: { continueSearch, backToMain } }

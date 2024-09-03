@@ -1,7 +1,7 @@
 export const emojis = [
   ['🌳', 'tree2'],
   ["⛰️", "mountain"],
-  ['🌺', 'flower3'],
+  ['🌼', 'flower3'],
   ['🍄', 'mushroom'],
   ['⭐️', 'star'],
   ['🌟', 'star2'],

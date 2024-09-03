@@ -70,10 +70,11 @@ ul {
 }
 
 #game-board {
-  display: grid;
-  gap: 2px;
-  margin: 20px;
+  width: 100%;
+  width: 335px;
+  margin: 0 auto;
 }
+
 .cell,
 .header-cell {
   width: 50px;
@@ -86,7 +87,55 @@ ul {
   cursor: pointer;
   user-select: none;
   cursor: pointer;
+  display: inline-block;
+  vertical-align: top
 }
+
+.header-cell.left {
+  margin-right: 10px;
+  background-color: #ffd084;
+  
+}
+
+.header-cell.right {
+  margin-left: 10px;
+  background-color: #ff8484;
+}
+
+.header-cell.bottom {
+  margin-top: 10px;
+  background-color: #ff8484;
+}
+
+.header-cell.top {
+  margin-bottom: 10px;
+  background-color: #ffd084;
+}
+
+.corner {
+  width: 60px;
+  height: 60px;
+  border: none;
+  border: 1px solid white;
+}
+
+.corner img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin: 10px;
+}
+
+.corner.top-left {
+  background-color: #ffd084;
+  border-top-left-radius: 10px;
+}
+
+.corner.bottom-right {
+  background-color: #ff8484;
+  border-bottom-right-radius: 10px;
+}
+
 
 .cell.disabled {
   pointer-events: none;
