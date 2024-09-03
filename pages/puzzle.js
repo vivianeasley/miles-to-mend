@@ -194,7 +194,6 @@ export const initPuzzle = (appNode, state) => {
     state.score += correct
 
     if (state.gameType === 'guessing') {
-        state.misses += incorrect
         state.score += correct
     }
 

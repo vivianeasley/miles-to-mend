@@ -124,6 +124,7 @@ const pages = {
     <div class="general-container">
       <h2>You win</h2>
       <h3>Your final score is <span class="final-score"></span>!</h3>
+      <p class="story">You return just as the last flames flicker, mere whispers of light in the crumbling hearth. You want to collapse, to let the weight of it all crush you into the earth. With trembling, mud-caked hands, you stoke the dying embers, coaxing them back into life. You begin to mix the medicine so desperately needed to save someone dear to you. Time is slipping through your fingers, but there's still enough.</p>
       <p>
         <button class="unstyled-button" data-event="backToMain">Back to Main</button>
       </p>
