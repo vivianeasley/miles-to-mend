@@ -75,8 +75,10 @@ const pages = {
       <h2>Miles to Mend</h2>
       <h4>Goal: Find all mushrooms and flowers correctly over 9 levels without getting 13 incorrect answers.</h4>
       <p><button class="unstyled-button" data-event="play">Play</button> <button class="unstyled-button" data-event="playWithSound">Play With Sound</button> <button class="unstyled-button" data-event="scores">Hi Scores</button></p>
+      <p><input type="checkbox" id="game-type" name="game-type" data-event="setGameType"> <label for="game-type">Add guessing (removes perfect information but scores more points each round)</label></p>
       <p>
       <h4>Rules:</h4>
+      <p>
       <ul>
         <li>Collect your ingredients by selecting the ingredient tab (mushroom or flower) and clicking an empty square on the board.</li>
         <li>The numbers along the borders show how many mushrooms and flowers to include in each row and column. Bottom and right show how many mushrooms. Top and left show how many flowers.</li>
@@ -86,10 +88,13 @@ const pages = {
         <li>To remove an ingredient from the board, click on it.</li>
         <li>When you've finished collecting, click a border number to score that row or column.</li>
         <li>When all spaces on the grid are scored, if you have fewer than 13 incorrect placements you progress to the next level.</li>
-        <li>Beat 9 levels to win!</li>
+        <li>Beat 10 levels to win!</li>
       </ul>
-      <p>A game by <a href="https://github.com/vivianeasley">Vivian Easley</a></p>
       </p>
+      <p class="story">
+        In the dimming embrace of twilight, you wander through the shadowed woods, a young apothecary driven by a quiet desperation. The light fades faster than your hopes, casting long, mournful shadows over the earth. The leaves whisper secrets of the night as you search, your hands trembling as they sift through the undergrowth, seeking the elusive plants and fungi that may hold the cure. Time is slipping away, as relentless as the fever burning within your small, distant home. You know the night is closing in, and with it, the chance to save a life.
+      </p>
+      <p>A game by <a href="https://github.com/vivianeasley">Vivian Easley</a></p>
     </div>
     `,
     funct: initMain,
@@ -133,6 +138,7 @@ const pages = {
     html: `
     <div class="general-container">
       <h2>You lose</h2>
+      <h3>Your final score is <span class="final-score"></span>!</h3>
       <p>
         <button class="unstyled-button" data-event="backToMain">Back to Main</button>
       </p>

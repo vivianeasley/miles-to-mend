@@ -4,7 +4,14 @@ import { initScoreSound } from '../utils/sound'
 import { updateScoreMisses } from '../utils/helpers'
 
 export const initWin = (appNode, state) => {
-  const backToMain = () => setPage('main')
+  const backToMain = () => {
+    setPage('main')
+    clearTimeout(timeOutId)
+    stopParticles()
+    state.score = 0
+    state.misses = 0
+    updateScoreMisses(state.score, state.misses)
+  }
   const { playCoinClinkSound } = initScoreSound()
   const finalScore = appNode.querySelector('.final-score')
   finalScore.textContent = state.score

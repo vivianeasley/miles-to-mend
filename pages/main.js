@@ -12,5 +12,21 @@ export const initMain = (appNode, state) => {
     setPage('scores')
   }
 
-  return { events: { play, playWithSound, scores } }
+  // handle checkbox
+  const gameTypeCheckbox = appNode.querySelector('#game-type')
+  if (state.gameType === 'guessing') {
+    gameTypeCheckbox.checked = true
+  } else {
+    gameTypeCheckbox.checked = false
+  }
+
+  const setGameType = (event) => {
+    if (event.target.checked) {
+      state.gameType = 'guessing'
+    } else {
+      state.gameType = 'puzzle'
+    }
+  }
+
+  return { events: { play, playWithSound, scores, setGameType } }
 }

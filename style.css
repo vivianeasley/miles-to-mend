@@ -238,6 +238,12 @@ button {
   opacity: 0.5;
 }
 
+.story {
+  max-width: 550px;
+  font-style: italic;
+  margin: 0 auto;
+}
+
 /* Media query for screens larger than tablet size */
 @media screen and (min-width: 768px) {
   .button-container {

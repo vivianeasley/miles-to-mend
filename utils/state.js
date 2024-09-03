@@ -14,5 +14,6 @@ export const initState = () => {
     lockedY: [],
     correct: [],
     incorrect: [],
+    gameType: 'puzzle',
   }
 }

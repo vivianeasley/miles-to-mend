@@ -1,4 +1,7 @@
-export const  genPuzzle = (gridSize) => {
+let mushroomLocations = [];
+
+export const  genPuzzle = (gridSize, state) => {
+  mushroomLocations = [];
   const board = Array(gridSize)
     .fill(null)
     .map(() => Array(gridSize).fill(''));
@@ -20,6 +23,17 @@ export const  genPuzzle = (gridSize) => {
   // Place flowers logically in valid positions
   placeFlowers(board, gridSize);
 
+
+  // randomly remove 1 to 2 mushrooms if gameType is guessing
+  if (state.gameType === 'guessing') {
+    const numMushroomsToRemove = Math.floor(gridSize/2) - 1;
+    for (let i = 0; i < numMushroomsToRemove; i++) {
+      const randomIndex = Math.floor(Math.random() * mushroomLocations.length);
+      const [randomY, randomX] = mushroomLocations[randomIndex];
+      board[randomY][randomX] = "";
+    }
+  }
+  
   return { playerSelections, board };
 }
 
@@ -71,6 +85,7 @@ function placeMushrooms(board, trees, gridSize) {
         board[newY][newX] === '' &&
         !isAdjacentTo(newX, newY, board, 'mountain')
       ) {
+        mushroomLocations.push([newY, newX]);
         board[newY][newX] = 'mushroom';
       }
     });
@@ -159,218 +174,3 @@ function isAdjacentTo(x, y, board, item) {
 function isInBounds(x, y, gridSize) {
   return x >= 0 && x < gridSize && y >= 0 && y < gridSize;
 }
-
-
-
-
-// export const genPuzzle = (gridSize) => {
-//   const board = Array(gridSize)
-//     .fill(null)
-//     .map(() => Array(gridSize).fill(''))
-//   const playerSelections = Array(gridSize)
-//     .fill(null)
-//     .map(() => Array(gridSize).fill(''))
-//   const trees = []
-//   const mountains = []
-
-//   // Randomly place mountains
-//   const numMountains = Math.floor(gridSize / 3) // Adjust this based on difficulty
-//   for (let i = 0; i < numMountains; i++) {
-//     let x, y
-//     do {
-//       x = Math.floor(Math.random() * gridSize)
-//       y = Math.floor(Math.random() * gridSize)
-//     } while (board[x][y] !== '') // Ensure mountain is placed on an empty cell
-
-//     board[x][y] = 'mountain'
-//     playerSelections[x][y] = 'mountain'
-//     mountains.push([x, y])
-//   }
-
-//   // Randomly place trees
-//   const baseTreeCount =
-//     Math.floor(Math.random() * ((gridSize * gridSize) / 3)) + gridSize
-//   const numTrees = gridSize >= 11 ? baseTreeCount + gridSize : baseTreeCount
-
-//   for (let i = 0; i < numTrees; i++) {
-//     let x, y
-//     do {
-//       x = Math.floor(Math.random() * gridSize)
-//       y = Math.floor(Math.random() * gridSize)
-//     } while (board[x][y] !== '') // Ensure tree is placed on an empty cell
-
-//     board[x][y] = 'tree'
-//     playerSelections[x][y] = 'tree'
-//     trees.push([x, y])
-//   }
-
-//   // Place mushrooms adjacent to trees and not adjacent to mountains
-//   trees.forEach(([x, y]) => {
-//     const directions = [
-//       [0, -1],
-//       [-1, 0],
-//       [1, 0],
-//       [0, 1],
-//     ]
-//     for (let [dx, dy] of directions) {
-//       const newX = x + dx
-//       const newY = y + dy
-//       if (
-//         isInBounds(newX, newY, gridSize) &&
-//         board[newX][newY] === '' &&
-//         !isAdjacentTo(newX, newY, board, 'mountain')
-//       ) {
-//         if (Math.random() < 0.7) board[newX][newY] = 'mushroom'
-//       }
-//     }
-//   })
-
-//   // Place flowers in cells that do not touch trees or mountains
-//   for (let x = 0; x < gridSize; x++) {
-//     for (let y = 0; y < gridSize; y++) {
-//       if (
-//         board[x][y] === '' &&
-//         canPlaceFlower(x, y, board, gridSize) &&
-//         !isAdjacentTo(x, y, board, 'mountain')
-//       ) {
-//         if (Math.random() < 0.7) board[x][y] = 'flower'
-//       }
-//     }
-//   }
-
-//   return { playerSelections, board }
-// }
-
-// // Helper function to check if a cell is adjacent to a specific item (tree, mountain, etc.)
-// function isAdjacentTo(x, y, board, item) {
-//   const directions = [
-//     [0, -1],
-//     [-1, 0],
-//     [1, 0],
-//     [0, 1],
-//   ]
-//   for (let [dx, dy] of directions) {
-//     const newX = x + dx
-//     const newY = y + dy
-//     if (isInBounds(newX, newY, board.length) && board[newX][newY] === item) {
-//       return true
-//     }
-//   }
-//   return false
-// }
-
-// // Helper function to check if a flower can be placed (it should not be adjacent to a tree or mountain)
-// function canPlaceFlower(x, y, board, gridSize) {
-//   const directions = [
-//     [-1, -1],
-//     [-1, 0],
-//     [-1, 1],
-//     [0, -1],
-//     [0, 1],
-//     [1, -1],
-//     [1, 0],
-//     [1, 1],
-//   ]
-//   for (let [dx, dy] of directions) {
-//     const newX = x + dx
-//     const newY = y + dy
-//     if (
-//       isInBounds(newX, newY, gridSize) &&
-//       (board[newX][newY] === 'tree' || board[newX][newY] === 'mountain')
-//     ) {
-//       return false
-//     }
-//   }
-//   return true
-// }
-
-// // Helper function to check if coordinates are within bounds
-// function isInBounds(x, y, gridSize) {
-//   return x >= 0 && x < gridSize && y >= 0 && y < gridSize
-// }
-
-
-
-// export const genPuzzle = (gridSize) => {
-//   const board = Array(gridSize)
-//     .fill(null)
-//     .map(() => Array(gridSize).fill(''))
-//   const playerSelections = Array(gridSize)
-//     .fill(null)
-//     .map(() => Array(gridSize).fill(''))
-//   const trees = []
-
-//   // Randomly place trees
-//   const baseTreeCount =
-//     Math.floor(Math.random() * ((gridSize * gridSize) / 3)) + gridSize // Random number of trees based on grid size
-
-//   // Higher levels add a couple more trees to make guessing flowers a little easier
-//   const numTrees = gridSize >= 11 ? baseTreeCount + gridSize : baseTreeCount
-
-//   for (let i = 0; i < numTrees; i++) {
-//     let x, y
-//     do {
-//       x = Math.floor(Math.random() * gridSize)
-//       y = Math.floor(Math.random() * gridSize)
-//     } while (board[x][y] === 'tree')
-
-//     board[x][y] = 'tree'
-//     playerSelections[x][y] = 'tree'
-//     trees.push([x, y])
-//   }
-
-//   // Place mushrooms adjacent to trees
-//   trees.forEach(([x, y]) => {
-//     const directions = [
-//       [0, -1],
-//       [-1, 0],
-//       [1, 0],
-//       [0, 1],
-//     ]
-//     for (let [dx, dy] of directions) {
-//       const newX = x + dx
-//       const newY = y + dy
-//       if (isInBounds(newX, newY, gridSize) && board[newX][newY] === '') {
-//         if (Math.random() < 0.7) board[newX][newY] = 'mushroom'
-//       }
-//     }
-//   })
-
-//   // Place flowers in cells that do not touch trees
-//   for (let x = 0; x < gridSize; x++) {
-//     for (let y = 0; y < gridSize; y++) {
-//       if (board[x][y] === '' && canPlaceFlower(x, y, board, gridSize)) {
-//         if (Math.random() < 0.7) board[x][y] = 'flower'
-//       }
-//     }
-//   }
-
-//   return { playerSelections, board }
-// }
-
-// // Helper function to check if a flower can be placed (it should not be adjacent to a tree)
-// function canPlaceFlower(x, y, board, gridSize) {
-//   const directions = [
-//     [-1, -1],
-//     [-1, 0],
-//     [-1, 1],
-//     [0, -1],
-//     [0, 1],
-//     [1, -1],
-//     [1, 0],
-//     [1, 1],
-//   ]
-//   for (let [dx, dy] of directions) {
-//     const newX = x + dx
-//     const newY = y + dy
-//     if (isInBounds(newX, newY, gridSize) && board[newX][newY] === 'tree') {
-//       return false
-//     }
-//   }
-//   return true
-// }
-
-// // Helper function to check if coordinates are within bounds
-// function isInBounds(x, y, gridSize) {
-//   return x >= 0 && x < gridSize && y >= 0 && y < gridSize
-// }

@@ -8,7 +8,7 @@ export const initPuzzle = (appNode, state) => {
   const scores = localStorage.getItem('scores')
   const { playCoinClinkSound } = initScoreSound()
   const { gridSize, images } = state
-  const { playerSelections, board } = genPuzzle(gridSize)
+  const { playerSelections, board } = genPuzzle(gridSize, state)
   const { initParticles, stopParticles, setCanvasSize } = initParticleEffect()
 
   // Calculate the top, right, left, and bottom arrays
@@ -193,6 +193,12 @@ export const initPuzzle = (appNode, state) => {
     state.misses += incorrect
     state.score += correct
 
+    if (state.gameType === 'guessing') {
+        state.misses += incorrect
+        state.score += correct
+    }
+
+
     // if lose, add score to scores
     if (state.misses >= 13) {
       state.gridSize = 4
@@ -203,18 +209,11 @@ export const initPuzzle = (appNode, state) => {
       stopParticles()
       setPage('lose')
       saveScore()
-      state.score = 0
-      state.misses = 0
       state.selectedType = 'mushroom'
-      updateScoreMisses(state.score, state.misses)
-    }
-
-    // if win, add score to scores
-    if (
+    } else if (
       (state.lockedX.length === board.length ||
         state.lockedY.length === board[0].length) &&
-      state.gridSize === 13 &&
-      state.misses < 13
+      state.gridSize === 13
     ) {
       state.gridSize = 4
       state.lockedX = []
@@ -225,21 +224,20 @@ export const initPuzzle = (appNode, state) => {
       saveScore()
       stopParticles()
       setPage('win')
-    }
-
-    // if beat level, increase level
-    if (
+    } else if (
       state.lockedX.length === board.length ||
-      (state.lockedY.length === board[0].length && state.misses < 13)
+      (state.lockedY.length === board[0].length)
     ) {
-      state.gridSize++
-      state.lockedX = []
-      state.lockedY = []
-      state.correct = []
-      state.incorrect = []
-      state.selectedType = 'mushroom'
-      stopParticles()
-      setPage('next')
+      setTimeout(() => {
+        state.gridSize++
+        state.lockedX = []
+        state.lockedY = []
+        state.correct = []
+        state.incorrect = []
+        state.selectedType = 'mushroom'
+        stopParticles()
+        setPage('next')
+      }, 1000)
     }
 
     renderBoard()
