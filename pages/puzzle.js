@@ -38,17 +38,17 @@ export const initPuzzle = (appNode, state) => {
   // Function to create the grid layout in HTML
   function renderBoard() {
     updateScoreMisses(state.score, state.misses)
-
+  
     const gameBoard = appNode.querySelector('#game-board')
-
+  
     if (!gameBoard) return
     // Set the grid template for a 7x7 grid (including headers)
     gameBoard.style.gridTemplateColumns = `50px repeat(${board[0].length}, 50px) 50px`
     gameBoard.style.gridTemplateRows = `50px repeat(${board.length}, 50px) 50px`
-
+  
     // Clear the current grid
     gameBoard.innerHTML = ''
-
+  
     // Create the grid with header cells
     for (let y = -1; y <= board.length; y++) {
       for (let x = -1; x <= board[0].length; x++) {
@@ -60,7 +60,7 @@ export const initPuzzle = (appNode, state) => {
           cell.classList.add('correct')
         if (state.incorrect.some((pair) => pair[0] === y && pair[1] === x))
           cell.classList.add('incorrect')
-
+  
         if (x === -1 && y === -1) {
           const cornerImg = document.createElement('img')
           cornerImg.src = images['flower3']
@@ -104,14 +104,19 @@ export const initPuzzle = (appNode, state) => {
           cell.setAttribute('data-x', x)
           cell.setAttribute('data-y', y)
           cell.dataset.event = 'cellClick'
-
-          // Populate the grid with predefined items (trees)
+  
+          // Populate the grid with predefined items (trees, mountains)
           const img = document.createElement('img')
           if (board[y][x] === 'tree') {
             img.src = images['tree2']
             img.classList.add('tile-image')
             cell.appendChild(img)
             cell.dataset.type = 'tree'
+          } else if (board[y][x] === 'mountain') {
+            img.src = images['mountain'] // Assuming you have a 'mountain' image in your images object
+            img.classList.add('tile-image')
+            cell.appendChild(img)
+            cell.dataset.type = 'mountain'
           } else if (playerSelections[y][x] === 'flower') {
             img.src = images['flower3']
             img.classList.add('tile-image')
@@ -124,31 +129,31 @@ export const initPuzzle = (appNode, state) => {
             cell.dataset.type = 'mushroom'
           }
         }
-
+  
         gameBoard.appendChild(cell)
       }
     }
     setCanvasSize(gameBoard.offsetWidth, gameBoard.offsetHeight)
   }
+  
 
-  // Handle cell clicks for placing/removing items
   const cellClick = (event) => {
-    const x = parseInt(event.target.getAttribute('data-x'))
-    const y = parseInt(event.target.getAttribute('data-y'))
+    const x = parseInt(event.target.getAttribute("data-x"));
+    const y = parseInt(event.target.getAttribute("data-y"));
 
     // Remove item if clicked again
     if (
-      playerSelections[y][x] === 'flower' ||
-      playerSelections[y][x] === 'mushroom'
+      playerSelections[y][x] === "flower" ||
+      playerSelections[y][x] === "mushroom"
     ) {
-      playerSelections[y][x] = ''
-    } else if (state.selectedType && board[y][x] !== 'tree') {
-      playerSelections[y][x] = state.selectedType
+      playerSelections[y][x] = "";
+    } else if (state.selectedType && board[y][x] !== "tree" && board[y][x] !== "mountain") {
+      playerSelections[y][x] = state.selectedType;
     }
 
     // Re-render the board to reflect changes
-    renderBoard()
-  }
+    renderBoard();
+  };
 
   // Set up event listeners for the buttons
   const flowerButton = () => {
@@ -247,79 +252,72 @@ export const initPuzzle = (appNode, state) => {
   }
 
   function countDifferences(playerSelections, board, axis, index) {
-    let correct = 0
-    let incorrect = 0
-
+    let correct = 0;
+    let incorrect = 0;
+  
     if (axis === 'x') {
       // Count differences for a row
       for (let x = 0; x < board[0].length; x++) {
-        // skip if
-        if (state.lockedY.includes(x.toString())) continue
-
-        if (playerSelections[index][x] === board[index][x]) {
-          if (
-            playerSelections[index][x] === 'flower' ||
-            playerSelections[index][x] === 'mushroom'
-          ) {
-            correct++
-
-            state.correct.push([index, x])
+        // Skip if the row is locked
+        if (state.lockedY.includes(x.toString())) continue;
+  
+        const playerSelection = playerSelections[index][x];
+        const boardItem = board[index][x];
+  
+        // Only check mushrooms and flowers for correctness
+        if (playerSelection === 'flower' || playerSelection === 'mushroom') {
+          if (playerSelection === boardItem) {
+            correct++;
+            state.correct.push([index, x]);
             setTimeout(() => {
-              initParticles(x * 60 + 60, index * 60 + 60, 100, images['star'])
+              initParticles(x * 60 + 60, index * 60 + 60, 100, images['star']);
               if (state.sound) {
-                playCoinClinkSound()
+                playCoinClinkSound();
               }
-            }, x * 50)
+            }, x * 50);
+          } else {
+            setTimeout(() => {
+              initParticles(x * 60 + 60, index * 60 + 60, 100, images['fail']);
+            }, x * 30);
+            state.incorrect.push([index, x]);
+            incorrect++;
           }
-        } else if (
-          playerSelections[index][x] === 'flower' ||
-          playerSelections[index][x] === 'mushroom' ||
-          playerSelections[index][x] === ''
-        ) {
-          setTimeout(() => {
-            initParticles(x * 60 + 60, index * 60 + 60, 100, images['fail'])
-          }, x * 30)
-          state.incorrect.push([index, x])
-          incorrect++
         }
       }
     } else if (axis === 'y') {
       // Count differences for a column
       for (let y = 0; y < board.length; y++) {
-        // skip if locked
-        if (state.lockedX.includes(y.toString())) continue
-
-        if (playerSelections[y][index] === board[y][index]) {
-          if (
-            playerSelections[y][index] === 'flower' ||
-            playerSelections[y][index] === 'mushroom'
-          ) {
-            correct++
-
-            state.correct.push([y, index])
+        // Skip if the column is locked
+        if (state.lockedX.includes(y.toString())) continue;
+  
+        const playerSelection = playerSelections[y][index];
+        const boardItem = board[y][index];
+  
+        // Only check mushrooms and flowers for correctness
+        if (playerSelection === 'flower' || playerSelection === 'mushroom') {
+          if (playerSelection === boardItem) {
+            correct++;
+            state.correct.push([y, index]);
             setTimeout(() => {
-              initParticles(index * 60 + 60, y * 60 + 60, 100, images['star'])
+              initParticles(index * 60 + 60, y * 60 + 60, 100, images['star']);
               if (state.sound) {
-                playCoinClinkSound()
+                playCoinClinkSound();
               }
-            }, y * 50)
+            }, y * 50);
+          } else {
+            setTimeout(() => {
+              initParticles(index * 60 + 60, y * 60 + 60, 100, images['fail']);
+            }, y * 50);
+            state.incorrect.push([y, index]);
+            incorrect++;
           }
-        } else if (
-          playerSelections[y][index] === 'flower' ||
-          playerSelections[y][index] === 'mushroom' ||
-          playerSelections[y][index] === ''
-        ) {
-          setTimeout(() => {
-            initParticles(index * 60 + 60, y * 60 + 60, 100, images['fail'])
-          }, y * 50)
-          state.incorrect.push([y, index])
-          incorrect++
         }
       }
     }
-
-    return { correct, incorrect }
+  
+    return { correct, incorrect };
   }
+  
 
   renderBoard()
 

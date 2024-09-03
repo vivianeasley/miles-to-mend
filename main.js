@@ -82,6 +82,7 @@ const pages = {
         <li>The numbers along the borders show how many mushrooms and flowers to include in each row and column. Bottom and right show how many mushrooms. Top and left show how many flowers.</li>
         <li>Flowers need sun: they must not be placed next to trees.</li>
         <li>Mushrooms need shade: they must be placed next to trees.</li>
+        <li>Neither mushrooms or flowers grow in the mountains: they must not be placed next to a mounatin.</li>
         <li>To remove an ingredient from the board, click on it.</li>
         <li>When you've finished collecting, click a border number to score that row or column.</li>
         <li>When all spaces on the grid are scored, if you have fewer than 13 incorrect placements you progress to the next level.</li>
