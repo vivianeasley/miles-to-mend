@@ -46,7 +46,8 @@ export const initPuzzle = (appNode, state) => {
     // gameBoard.style.gridTemplateColumns = `50px repeat(${board[0].length}, 50px) 50px`
     // gameBoard.style.gridTemplateRows = `50px repeat(${board.length}, 50px) 50px`
 
-    gameBoard.style.width = board.length * 60 + 100 + 'px'
+    // 800px
+    gameBoard.style.width = (board.length + 2) * 52 + 20 + 'px'
   
     // Clear the current grid
     gameBoard.innerHTML = ''

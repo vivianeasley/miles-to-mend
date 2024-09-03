@@ -72,7 +72,7 @@ ul {
 #game-board {
   width: 100%;
   width: 335px;
-  margin: 0 auto;
+  margin: 30px auto 0;
 }
 
 .cell,
