@@ -265,7 +265,7 @@ export const initPuzzle = (appNode, state) => {
         const boardItem = board[index][x];
   
         // Only check mushrooms and flowers for correctness
-        if (playerSelection === 'flower' || playerSelection === 'mushroom') {
+        if (boardItem === 'flower' || boardItem === 'mushroom') {
           if (playerSelection === boardItem) {
             correct++;
             state.correct.push([index, x]);
@@ -294,7 +294,7 @@ export const initPuzzle = (appNode, state) => {
         const boardItem = board[y][index];
   
         // Only check mushrooms and flowers for correctness
-        if (playerSelection === 'flower' || playerSelection === 'mushroom') {
+        if (boardItem === 'flower' || boardItem === 'mushroom') {
           if (playerSelection === boardItem) {
             correct++;
             state.correct.push([y, index]);
@@ -317,6 +317,7 @@ export const initPuzzle = (appNode, state) => {
   
     return { correct, incorrect };
   }
+  
   
 
   renderBoard()
