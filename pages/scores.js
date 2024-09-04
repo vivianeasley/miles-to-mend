@@ -1,6 +1,8 @@
 import { setPage } from '../main'
 
 export const initScores = () => {
+  document.querySelector('.stats-container').style.display = 'none'
+
   const backToMain = () => setPage('main')
   const scores = localStorage.getItem('scores')
   const scoreArray = JSON.parse(scores)

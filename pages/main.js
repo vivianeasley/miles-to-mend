@@ -1,6 +1,7 @@
 import { setPage } from '../main'
 
 export const initMain = (appNode, state) => {
+  document.querySelector('.stats-container').style.display = 'none'
   const play = () => setPage('puzzle')
 
   const playWithSound = () => {

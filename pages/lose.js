@@ -1,9 +1,9 @@
 import { setPage } from '../main'
 import { updateScoreMisses } from "../utils/helpers"
 
-export const initLose = (appNode, state) => {
-    const finalScore = appNode.querySelector(".final-score")
-    finalScore.textContent = state.score
+export const initLose = (appNode, state) => {    
+  const finalScore = appNode.querySelector('.final-score')
+  finalScore.textContent = state.score
   const backToMain = () => {
     setPage('main')
     state.score = 0

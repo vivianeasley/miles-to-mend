@@ -73,8 +73,8 @@ const pages = {
     html: `
     <div class="general-container">
       <h2>Miles to Mend</h2>
-      <h4>Goal: Find all mushrooms and flowers correctly over 9 levels without getting 13 incorrect answers.</h4>
-      <p><button class="unstyled-button" data-event="play">Play</button> <button class="unstyled-button" data-event="playWithSound">Play With Sound</button> <button class="unstyled-button" data-event="scores">Hi Scores</button></p>
+      <h4>Goal: Find all mushrooms and flowers correctly over 10 levels without getting 13 incorrect answers.</h4>
+      <p><button class="unstyled-button" data-event="play">Play</button> <button class="unstyled-button" data-event="playWithSound">Play With Sound</button> <button class="unstyled-button" data-event="scores">High Scores</button></p>
       <p><input type="checkbox" id="game-type" name="game-type" data-event="setGameType"> <label for="game-type">Add guessing (removes perfect information but scores more points each round)</label></p>
       <p>
       <h4>Rules:</h4>

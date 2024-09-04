@@ -5,6 +5,8 @@ import { initParticleEffect } from '../pages/particle-effect'
 import { initScoreSound } from '../utils/sound'
 
 export const initPuzzle = (appNode, state) => {
+    document.querySelector('.stats-container').style.display = 'flex'
+
   const scores = localStorage.getItem('scores')
   const { playCoinClinkSound } = initScoreSound()
   const { gridSize, images } = state
